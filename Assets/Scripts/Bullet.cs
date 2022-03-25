@@ -81,7 +81,17 @@ public class Bullet : MonoBehaviour
     {
         Damageable damageable = obj.GetComponent<Damageable>();
         if (damageable)
-            damageable.TakeDamage(damage);
+        {
+            // If this is a friendly bullet hitting an ally
+            if(type == Type.Friendly && damageable is DamageablePlayer)
+            {
+                if(damageable.GetRecovering())
+                    damageable.Heal(5);
+            }
+            else
+                damageable.TakeDamage(damage, rb.velocity);
+        }
+            
 
         Destroy(gameObject);
     }

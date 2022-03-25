@@ -5,10 +5,9 @@ using UnityEngine;
 public class Boss : MonoBehaviour
 {
 
-    public GameObject players;
-
     private Rigidbody2D rb;
     private Shooter shooter;
+    private ContactDamager contactDamager;
 
     public float rotateSpeed = 5;
     public float rotateDuration = 1.5f;
@@ -29,6 +28,7 @@ public class Boss : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         shooter = GetComponent<Shooter>();
+        contactDamager = GetComponent<ContactDamager>();
     }
 
     // Update is called once per frame
@@ -83,11 +83,13 @@ public class Boss : MonoBehaviour
     {
         isIdle = false;
         rb.velocity = transform.up * chargeSpeed;
+        contactDamager.damageOnContact = true;
 
         // yield return 0; // wait one frame
         yield return new WaitForSeconds(chargeDuration);
         rb.velocity = Vector2.zero;
 
+        contactDamager.damageOnContact = false;
         currentState = State.Rotating;
         isIdle = true;
     }
@@ -101,11 +103,11 @@ public class Boss : MonoBehaviour
     public void SelectTarget()
     {
         List<GameObject> playerList = new List<GameObject>();
-        for (int i = 0; i < players.transform.childCount; ++i)
+        for (int i = 0; i < ObjectContainer.instance.players.transform.childCount; ++i)
         {
-            GameObject player = players.transform.GetChild(i).gameObject;
-            if(player.activeSelf)
-                playerList.Add(players.transform.GetChild(i).gameObject);
+            GameObject player = ObjectContainer.instance.players.transform.GetChild(i).gameObject;
+            if(player.activeSelf && !player.GetComponentInChildren<DamageablePlayer>().GetRecovering())
+                playerList.Add(ObjectContainer.instance.players.transform.GetChild(i).gameObject);
         }
 
         if (playerList.Count > 0)
@@ -124,14 +126,6 @@ public class Boss : MonoBehaviour
         yield return new WaitForSeconds(rotateDuration);
         currentState = State.Attacking;
         isIdle = true;
-    }
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.collider.CompareTag("Player"))
-        {
-
-        }
     }
 
     // ATTACKS

@@ -15,7 +15,7 @@ public class Splitter : MonoBehaviour
     private float timeAlive = 0;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         
@@ -36,7 +36,7 @@ public class Splitter : MonoBehaviour
     {
         Damageable damageable = collision.gameObject.GetComponent<Damageable>();
         if (damageable && collision.gameObject.layer == LayerMask.NameToLayer("Allies"))
-            damageable.TakeDamage(damage);
+            damageable.TakeDamage(damage, rb.velocity);
 
         Vector2 point = collision.GetContact(0).point;
         float dx = point.x - transform.position.x;
@@ -57,17 +57,22 @@ public class Splitter : MonoBehaviour
             for (int i = 0; i < duplicatesPerSplit; ++i) {
                 GameObject newDuplicate = Instantiate(duplicate, transform.position, Quaternion.identity);
                 newDuplicate.transform.parent = transform.parent;
-                newDuplicate.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+                //newDuplicate.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
                 newDuplicate.transform.localScale = transform.localScale * 0.66f;
                 newDuplicate.GetComponent<Splitter>().numSplits = numSplits - 1;
             }
 
-        Destroy(gameObject);
+        // Destroy(gameObject);
     }
 
     public static Vector2 RandomVector(float min, float max)
     {
         return new Vector2(Random.Range(min, max) * (Random.Range(0, 2) == 0 ? -1 : 1),
             Random.Range(min, max) * (Random.Range(0, 2) == 0 ? -1 : 1));
+    }
+
+    public void OnDestroy()
+    {
+        //Split();
     }
 }

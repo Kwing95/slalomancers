@@ -49,12 +49,13 @@ public class Shooter : MonoBehaviour
 
     public void SingleShot()
     {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position + UnitDirection(), UnitDirection());
+        Vector2 unitDirection = UnitDirection();
+        RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + unitDirection, unitDirection);
         Bullet.Type type = bulletType;// (hit.collider != null && hit.collider.CompareTag("Friend")) ? Bullet.Type.Support : Bullet.Type.Friendly;
 
-        Vector2 vel = bulletSpeed * UnitDirection();
+        Vector2 vel = bulletSpeed * unitDirection;
 
-        GameObject temp = Instantiate(bullet, transform.position + UnitDirection(), Quaternion.identity);
+        GameObject temp = Instantiate(bullet, (Vector2)transform.position + unitDirection * 2, Quaternion.identity);
         temp.GetComponent<Bullet>().Initialize(vel, bulletDamage, bulletPenetration, bulletLifespan, type, color);
         //temp.GetComponent<SpriteRenderer>().color = bulletType == Bullet.Type.Friendly ? Color.green : Color.red;
     }

@@ -305,7 +305,7 @@ Transform:
   m_GameObject: {fileID: 7686692587111979015}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: -10, y: -10, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 1}
   m_Children:
   - {fileID: 7686692586761909319}
   - {fileID: 7686692587787027769}
@@ -428,7 +428,7 @@ GameObject:
   - component: {fileID: 7686692587787027768}
   m_Layer: 12
   m_Name: Forcefield
-  m_TagString: Untagged
+  m_TagString: Friend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -476,11 +476,11 @@ GameObject:
   - component: {fileID: 7686692588681227094}
   - component: {fileID: 7686692588681227089}
   - component: {fileID: 7686692588681227095}
-  - component: {fileID: 7686692588681227093}
+  - component: {fileID: 6442203053970953479}
   - component: {fileID: 7686692588681227092}
   m_Layer: 8
   m_Name: Controller
-  m_TagString: Untagged
+  m_TagString: Friend
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -577,7 +577,7 @@ MonoBehaviour:
   bulletPenetration: 1
   bulletLifespan: 3
   rb: {fileID: 7686692587111979013}
---- !u!114 &7686692588681227093
+--- !u!114 &6442203053970953479
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -586,15 +586,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 7686692588681227090}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d44f772f9a561474896acb6917c57ff5, type: 3}
+  m_Script: {fileID: 11500000, guid: 901a54422fc7a5949aef9ba90f9563b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  behavior: 0
   root: {fileID: 7686692587111979015}
-  greenBar: {fileID: 0}
-  redBar: {fileID: 0}
+  rb: {fileID: 7686692587111979013}
+  maxHealth: 100
+  canRagdoll: 1
   recoverySpeed: 10
   lives: 3
+  greenBar: {fileID: 0}
+  redBar: {fileID: 0}
 --- !u!114 &7686692588681227092
 MonoBehaviour:
   m_ObjectHideFlags: 0
