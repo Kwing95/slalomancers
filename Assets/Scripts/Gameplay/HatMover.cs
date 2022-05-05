@@ -38,6 +38,7 @@ public class HatMover : MonoBehaviour
     private bool isPressed = false;
     private float clockwise = 1;
     private bool hasTurned = false;
+    private bool paused = false;
 
     // Start is called before the first frame update
     void Start()
@@ -60,20 +61,22 @@ public class HatMover : MonoBehaviour
         // Following line for debugging
         // isPressed = Input.anyKey;
 
-        if (isPressed)
+        if (isPressed || paused)
         {
             rb.constraints = ~RigidbodyConstraints2D.FreezePositionX &
                 ~RigidbodyConstraints2D.FreezePositionY &
                 RigidbodyConstraints2D.FreezeRotation;
             rb.velocity = Vector2.zero;
 
-            if (!hasTurned)
+            if (!paused)
             {
-                clockwise *= -1;
-                hasTurned = true;
+                if (!hasTurned)
+                {
+                    clockwise *= -1;
+                    hasTurned = true;
+                }
+                shooter.Shoot();
             }
-            shooter.Shoot();
-            
         }
         else
         {
@@ -86,6 +89,11 @@ public class HatMover : MonoBehaviour
             rb.rotation = rb.rotation + (clockwise * rotationSpeed);
         }
 
+    }
+
+    public void SetPause(bool _paused)
+    {
+        paused = _paused;
     }
 
     private void OnCollisionStay(Collision collision)

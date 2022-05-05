@@ -21,4 +21,13 @@ public class ObjectContainer : MonoBehaviour
     {
         
     }
+
+    public static List<GameObject> GetAllPlayers()
+    {
+        List<GameObject> corpseList = new List<GameObject>();
+        for (int i = 0; i < instance.players.transform.childCount; ++i)
+            corpseList.Add(instance.players.transform.GetChild(i).gameObject);
+
+        return corpseList;
+    }
 }
