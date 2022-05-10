@@ -16,7 +16,7 @@ public class Fader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Debug.Log("init from " + gameObject.name);
+        //Debug.Log("init from " + gameObject.name);
         instance = this;
         image = GetComponent<Image>();
         GetComponent<RectTransform>().sizeDelta = new Vector2(Screen.width, Screen.height);

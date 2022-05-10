@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class DoorManager : MonoBehaviour
 {
@@ -11,11 +12,16 @@ public class DoorManager : MonoBehaviour
     public Door right;
     public Door up;
     public Door down;
+    public TextMeshPro text;
+
+    private void Awake()
+    {
+        instance = this;
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
         UpdateDoors();
     }
 
@@ -27,17 +33,50 @@ public class DoorManager : MonoBehaviour
 
     public void LoadRoom(Point offset)
     {
+        // Update current location
         Point oldPoint = Room<RoomData>.current.location;
-        Debug.Log(Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
+        //Debug.Log(Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
         Room<RoomData>.current = Room<RoomData>.GetRoomFromPoint(new Point(oldPoint.x + offset.x, oldPoint.y + offset.y));
+        text.text = Room<RoomData>.current.name;
+        // Update doors
         UpdateDoors();
         Debug.Log(Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
-
+        // Unfreeze players
         foreach (GameObject player in ObjectContainer.GetAllPlayers())
             player.GetComponentInChildren<HatMover>().SetPause(false);
+        // Spawn enemies
+        if (!Room<RoomData>.current.GetCleared())
+        {
+            for(int i = 0; i < Room<RoomData>.current.data.chunks.Length; ++i)
+            {
+                Chunk chunk = Room<RoomData>.current.data.chunks[i];
+                if(chunk.type != Chunk.Enemies.None)
+                {
+                    Instantiate(GameManager.instance.enemies[(int)chunk.type], ChunkIndexToPosition(i), 
+                        Quaternion.identity, ObjectContainer.instance.enemies.transform);
+                }
+            }
+        }
     }
 
-    private void UpdateDoors()
+    private Vector2 ChunkIndexToPosition(int index)
+    {
+        Vector2 position = new Vector2(0, 0);
+
+        if (index < 2)
+            position.y = 9;
+        else if (index > 2)
+            position.y = -9;
+
+        if (index == 0 || index == 3)
+            position.x = -9;
+        else if (index == 1 || index == 4)
+            position.x = 9;
+
+        return position;
+    }
+
+    public void UpdateDoors()
     {
         Point point = Room<RoomData>.current.location;
 

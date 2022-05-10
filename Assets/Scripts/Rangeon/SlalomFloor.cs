@@ -7,18 +7,42 @@ public class RoomData
     public int difficulty = 0;
     public bool isSecret = false;
     // Following vars are for chunks
-    public Chunk[] chunks = new Chunk[9];
+    public Chunk[] chunks = new Chunk[5];
 
     public RoomData()
     {
-        
+        List<int> vacancies = new List<int>();
+        for (int i = 0; i < 5; ++i)
+        {
+            vacancies.Add(i);
+            chunks[i] = new Chunk(true);
+        }
+
+        int numEnemies = PRNG.Range(1, 3); // 1-2, 1-3, 2-3, 2-4, 2-5
+        for(int i = 0; i < numEnemies; ++i)
+        {
+            int chunkIndex = PRNG.Range(0, vacancies.Count);
+            chunks[chunkIndex] = new Chunk();
+            vacancies.RemoveAt(chunkIndex);
+        }
+
     }
 }
 
 public class Chunk
 {
-    public Enemy enemy;
-    public bool isTrap = false;
+    public enum Enemies { None, Asteroid, Wyvern, Geyser, Bombardier, Trap }
+    public Enemies type;
+
+    public Chunk(bool isVacant=false)
+    {
+        type = isVacant ? Enemies.None : (Enemies)PRNG.Range(1, 5);
+    }
+
+    public void SetTrap()
+    {
+        type = Enemies.Trap;
+    }
 }
 
 public class Chest

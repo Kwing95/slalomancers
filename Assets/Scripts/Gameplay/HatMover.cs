@@ -93,6 +93,10 @@ public class HatMover : MonoBehaviour
 
     public void SetPause(bool _paused)
     {
+        // FIXME: Player needs to actually vanish
+        foreach (SpriteRenderer sprite in sprites)
+            sprite.enabled = !_paused;
+
         paused = _paused;
     }
 

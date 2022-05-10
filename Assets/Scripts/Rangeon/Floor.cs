@@ -79,6 +79,8 @@ public class Room<TContent>
     public void Clear()
     {
         cleared = true;
+        if(DoorManager.instance)
+            DoorManager.instance.UpdateDoors();
     }
     public bool GetCleared()
     {

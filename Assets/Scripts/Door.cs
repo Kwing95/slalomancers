@@ -42,7 +42,7 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log(collision.gameObject.name);
+        // Debug.Log(collision.gameObject.name);
         if (collision.gameObject.layer == LayerMask.NameToLayer("AllyBullets") ||
             collision.gameObject.layer == LayerMask.NameToLayer("EnemyBullets"))
         {
@@ -66,7 +66,7 @@ public class Door : MonoBehaviour
 
     public void SetStatus(Status value)
     {
-        Debug.Log(value.ToString());
+        //Debug.Log(value.ToString());
         status = value;
         Color newColor = new Color();
 

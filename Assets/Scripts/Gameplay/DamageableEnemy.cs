@@ -4,9 +4,24 @@ using UnityEngine;
 
 public class DamageableEnemy : Damageable
 {
+    public delegate void DamageHandler();
+    public DamageHandler damageHandler;
+
+    private void OnDestroy()
+    {
+        Debug.Log(ObjectContainer.GetAllEnemies().Count);
+        if(ObjectContainer.GetAllEnemies().Count == 1)
+        {
+            Room<RoomData>.current.Clear();
+        }
+    }
 
     public override void TakeDamage(int amount, Vector2 force)
     {
+        //Debug.Log(greenHealth + " " + redHealth);
+        if(damageHandler != null)
+            damageHandler.Invoke();
+
         if (recovering)
             redHealth -= amount;
         else

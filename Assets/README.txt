@@ -1,3 +1,8 @@
+LENGTH:		TRAINING / SINGLE ROOM / SINGLE FLOOR / DUNGEON
+MODE:		REMOTE / LOCAL (1-4 players)
+DIFFICULTY:	EASY / NOVICE / NORMAL / HARD / EXPERT
+SEED:		UNIX / CUSTOM (input seed)
+
 CONTROLS
 	- Tap your button to change the direction your character is moving. Tapping repeatedly will
 	cause the player to swerve back and forth but ultimately move in a somewhat straight line.
@@ -11,7 +16,8 @@ CONTROLS
 	and therefore also causes them to lose less RED HEALTH while stunned.
 
 MATADOR
-	- Training enemy, can only be hurt by contact damage, takes 3 hits to kill
+	- Doesn't attack
+	- Moves to different location upon taking damage
 WYVERN
 	- Charge: Turns toward the player and rushes, dealing damage upon contact.
 	- Fireball: Turns toward player and shoots three bullets.
@@ -19,17 +25,20 @@ ASTEROID
 	- Bounces upon colliding with any object. Upon death, it splits into two smaller copies of
 	itself.
 BOMBARDIER
-	- Throws bombs around the screen that must be disarmed from a distance.
+	- Moves randomly around screen
+	- Periodically drops bombs that must be disarmed from a distance
 GEYSER
 	- Rapid fires bullets in an arc
-	- Can be pushed by bullets
-UNNAMED
-	- Large, slow bullets
-	- Explosives
-	- Radial burst
-	- Residue
+	- Can be slowed by bullets
+BULL
+	- Targets nearest player
+	- Charges until it hits a wall
+	- Takes extra damage from behind
+SHOCK TROOP
+	- Circles around player
 	- Scatter shot
-	- Shielded enemy (must be flanked)
+OTHER
+	- Homing missiles
 
 CHUNKS
 	- Destructible wall (| or -)
