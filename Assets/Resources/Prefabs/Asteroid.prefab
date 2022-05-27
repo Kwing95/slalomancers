@@ -158,7 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   root: {fileID: 190153827808737191}
   rb: {fileID: 190153827808737187}
-  maxHealth: 3
+  maxHealth: 1
   canRagdoll: 0
   recoverySpeed: 10
   lives: 3

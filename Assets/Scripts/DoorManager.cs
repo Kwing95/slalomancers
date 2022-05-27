@@ -37,7 +37,7 @@ public class DoorManager : MonoBehaviour
         Point oldPoint = Room<RoomData>.current.location;
         //Debug.Log(Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
         Room<RoomData>.current = Room<RoomData>.GetRoomFromPoint(new Point(oldPoint.x + offset.x, oldPoint.y + offset.y));
-        text.text = Room<RoomData>.current.name;
+        text.text = Room<RoomData>.current.name + "\n" + Room<RoomData>.current.data.difficulty;
         // Update doors
         UpdateDoors();
         Debug.Log(Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
@@ -87,6 +87,15 @@ public class DoorManager : MonoBehaviour
     }
     private void UpdateDoor(Door door, Point point)
     {
+        string output = "";
+        for(int i = 0; i < 8; ++i)
+        {
+            for(int j = 0; j < 8; ++j)
+            {
+                output += floor.floor.floor[i, j] == null ? "1" : "0";
+            }
+            output += "\n";
+        }
         if(Floor<RoomData>.PointInBounds(point) && floor.floor.floor[point.y, point.x].data.isSecret)
             door.SetStatus(Door.Status.Blocked);
         else if (Floor<RoomData>.PointInBounds(point) && floor.floor.floor[point.y, point.x].GetValid())
@@ -94,4 +103,5 @@ public class DoorManager : MonoBehaviour
         else
             door.SetStatus(Door.Status.Blocked);
     }
+
 }

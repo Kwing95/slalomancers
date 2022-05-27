@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,8 +7,10 @@ public class RoomData
 {
     public int difficulty = 0;
     public bool isSecret = false;
+    public PlayerStats.Stat powerup;
     // Following vars are for chunks
     public Chunk[] chunks = new Chunk[5];
+    public static PlayerStats.Stat[] powerupTypes = (PlayerStats.Stat[])Enum.GetValues(typeof(PlayerStats.Stat));
 
     public RoomData()
     {
@@ -18,7 +21,7 @@ public class RoomData
             chunks[i] = new Chunk(true);
         }
 
-        int numEnemies = PRNG.Range(1, 3); // 1-2, 1-3, 2-3, 2-4, 2-5
+        int numEnemies = PRNG.Range(2, 3); // 1-2, 1-3, 2-3, 2-4, 2-5
         for(int i = 0; i < numEnemies; ++i)
         {
             int chunkIndex = PRNG.Range(0, vacancies.Count);
@@ -26,6 +29,7 @@ public class RoomData
             vacancies.RemoveAt(chunkIndex);
         }
 
+        powerup = powerupTypes[PRNG.Range(0, powerupTypes.Length)];
     }
 }
 
@@ -44,13 +48,6 @@ public class Chunk
         type = Enemies.Trap;
     }
 }
-
-public class Chest
-{
-    public enum Chests { }
-    public List<string> codes;
-}
-
 public class Enemy
 {
 
@@ -113,7 +110,13 @@ public class SlalomFloor : MonoBehaviour
             difficulties.RemoveAt(difficultyIndex);
         }
 
-        // Populate 
+        List<PartialChest> chests = PartialChest.GenerateSet(/*GameManager.numPlayers*/4);
+        foreach(PartialChest chest in chests)
+        {
+            Debug.Log(chest.code);
+        }
+        Debug.Log(chests[0].fullCode);
+        // Pick random rooms
         foreach (Room<RoomData> room in Room<RoomData>.rooms)
         {
             if (room.GetValid() && !room.isStart)
@@ -130,7 +133,7 @@ public class SlalomFloor : MonoBehaviour
             //validRooms[trapIndex].data.
         }
 
-        Print();
+        // Print();
     }
 
     private void Print()

@@ -58,8 +58,8 @@ public class DamageablePlayer : Damageable
     {
         if (greenBar)
         {
-            greenBar.fillAmount = greenHealth / 100;
-            redBar.fillAmount = redHealth / 100;
+            greenBar.fillAmount = greenHealth / maxHealth;
+            redBar.fillAmount = redHealth / maxHealth;
         }
     }
 

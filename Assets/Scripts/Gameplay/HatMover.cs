@@ -18,16 +18,6 @@ public class HatMover : MonoBehaviour
     public float moveSpeed = 10; // min 3 max 12
     public float rotationSpeed = 5; // min 2 max 6
 
-    public float attackSpeed = 0.5f;
-    public float bulletDamage = 1;
-
-    public int health = 3;
-    public float recoveryTime = 5;
-
-    public float bulletSpeed = 10;
-    public float bulletPenetration = 1;
-    public float bulletLifespan = 3;
-
     public Rigidbody2D rb;
     public GameObject bullet;
     public Color color;

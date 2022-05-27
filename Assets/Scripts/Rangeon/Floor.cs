@@ -76,10 +76,10 @@ public class Room<TContent>
         return uniques;
     }
 
-    public void Clear()
+    public void Clear(bool update=true)
     {
         cleared = true;
-        if(DoorManager.instance)
+        if(update && DoorManager.instance)
             DoorManager.instance.UpdateDoors();
     }
     public bool GetCleared()
@@ -119,7 +119,7 @@ public class Floor<TContent>
         SetStatus(Room<TContent>.current.location, Room<TContent>.current.mapStatus);
 
         AddRoom(true);
-        Room<TContent>.current.Clear();
+        Room<TContent>.current.Clear(false);
 
         for (int i = 0; i < numRooms; ++i)
         {
@@ -129,7 +129,7 @@ public class Floor<TContent>
 
         UpdateNumNeighbors();
 
-        LoadRoom(0, 0);
+        //LoadRoom(0, 0);
         // ConfigureDoors();
     }
 

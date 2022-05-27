@@ -91,8 +91,8 @@ public class Bullet : MonoBehaviour
             else
                 damageable.TakeDamage(damage, rb.velocity);
         }
-            
-
-        Destroy(gameObject);
+        penetration -= 1;
+        if(penetration <= 0)
+            Destroy(gameObject);
     }
 }

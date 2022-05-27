@@ -100,12 +100,13 @@ public class PRNG : MonoBehaviour
         List<string> returnValue = new List<string>();
         returnValue.Add("");
         return returnValue;
+        /*
         StreamReader inStream = new StreamReader(path);
 
         while (!inStream.EndOfStream)
             returnValue.Add(inStream.ReadLine());
 
         inStream.Close();
-        return returnValue;
+        return returnValue;*/
     }
 }

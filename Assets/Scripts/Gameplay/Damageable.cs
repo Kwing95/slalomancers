@@ -23,7 +23,7 @@ public class Damageable : MonoBehaviour
     protected bool recovering = false;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         greenHealth = redHealth = maxHealth;
         

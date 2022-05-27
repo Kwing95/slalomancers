@@ -13,6 +13,7 @@ public class Bombardier : MonoBehaviour
     public float chargeSpeed = 10;
     public float chargeDuration = 1;
     public float rotateDuration = 1.5f;
+    public int mineDamage = 10;
 
     private enum State { Rotating, Attacking };
     private State currentState;
@@ -55,7 +56,11 @@ public class Bombardier : MonoBehaviour
         rb.velocity = Vector2.zero;
 
         if(Landmine.total < 3)
-            Instantiate(landmine, transform.position, Quaternion.identity);
+        {
+            GameObject newMine = Instantiate(landmine, transform.position, Quaternion.identity);
+            newMine.GetComponent<Landmine>().damage = mineDamage;
+        }
+            
         currentState = State.Rotating;
         isIdle = true;
     }
