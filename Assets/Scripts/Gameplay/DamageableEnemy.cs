@@ -9,10 +9,17 @@ public class DamageableEnemy : Damageable
 
     private void OnDestroy()
     {
-        Debug.Log(ObjectContainer.GetAllEnemies().Count);
+        // Debug.Log(ObjectContainer.GetAllEnemies().Count);
         if(ObjectContainer.GetAllEnemies().Count == 1)
         {
-            Room<RoomData>.current.Clear();
+            if(GameManager.currentMode == GameManager.GameMode.SingleFloor)
+            {
+                Room<RoomData>.current.Clear();
+            }
+            else if(GameManager.currentMode == GameManager.GameMode.Arcade)
+            {
+                ArcadeManager.instance.CheckEnemyContainer();
+            }
         }
     }
 
@@ -23,7 +30,12 @@ public class DamageableEnemy : Damageable
             damageHandler.Invoke();
 
         if (recovering)
+        {
+            if(redHealth < 2)
+                redHealth = 0;
+            
             redHealth -= amount;
+        }
         else
             greenHealth -= amount;
 
@@ -79,7 +91,7 @@ public class DamageableEnemy : Damageable
             Destroy(root);
         }
 
-        bool enoughHealth = greenHealth >= redHealth;
+        bool enoughHealth = greenHealth >= (redHealth * 1.5f);
 
         if(!enoughHealth && ragdolling)
         {

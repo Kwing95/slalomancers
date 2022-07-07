@@ -7,10 +7,9 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-
-    public static int numAsteroids = 1;
-    public static int numWyverns = 1;
-    public static int numPlayers = 4;
+    public enum GameMode { Arcade, SingleFloor }
+    public static GameMode currentMode = GameMode.Arcade;
+    public GameMode modeToSet;
 
     public GameObject asteroid;
     public GameObject wyvern;
@@ -23,6 +22,7 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        currentMode = modeToSet;
         instance = this;
     }
 
@@ -36,9 +36,6 @@ public class GameManager : MonoBehaviour
         for (int i = 0; i < numWyverns; ++i)
             Instantiate(wyvern, SpawnPosition(), Quaternion.identity, ObjectContainer.instance.enemies.transform);
         */
-
-        for (int i = 0; i < playerButtons.Count; ++i)
-            playerButtons[i].SetActive(i < numPlayers);
     }
 
     private Vector2 SpawnPosition()

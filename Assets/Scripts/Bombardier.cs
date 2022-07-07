@@ -8,6 +8,7 @@ public class Bombardier : MonoBehaviour
     public Vector2 topLeft;
     public Vector2 bottomRight;
     public GameObject landmine;
+    public GameObject spawnOrb;
     private Rigidbody2D rb;
     private bool isIdle = true;
     public float chargeSpeed = 10;
@@ -57,7 +58,13 @@ public class Bombardier : MonoBehaviour
 
         if(Landmine.total < 3)
         {
-            GameObject newMine = Instantiate(landmine, transform.position, Quaternion.identity);
+            Vector2 spawnPosition = transform.position;
+            
+            GameObject newOrb = Instantiate(spawnOrb, spawnPosition, Quaternion.identity);
+            newOrb.GetComponent<SpawnOrb>().maxSize = 12;
+            yield return new WaitForSeconds(1);
+
+            GameObject newMine = Instantiate(landmine, spawnPosition, Quaternion.identity);
             newMine.GetComponent<Landmine>().damage = mineDamage;
         }
             

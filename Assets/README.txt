@@ -15,35 +15,37 @@ CONTROLS
 	- Shooting a stunned ally will heal their GREEN HEALTH. This allows them to revive faster
 	and therefore also causes them to lose less RED HEALTH while stunned.
 
-MATADOR
-	- Doesn't attack
-	- Moves to different location upon taking damage
-WYVERN
-	- Charge: Turns toward the player and rushes, dealing damage upon contact.
-	- Fireball: Turns toward player and shoots three bullets.
-ASTEROID
-	- Bounces upon colliding with any object. Upon death, it splits into two smaller copies of
-	itself.
-BOMBARDIER
-	- Moves randomly around screen
-	- Periodically drops bombs that must be disarmed from a distance
-GEYSER
-	- Rapid fires bullets in an arc
-	- Can be slowed by bullets
-BULL
-	- Targets nearest player
-	- Charges until it hits a wall
-	- Takes extra damage from behind
-SHOCK TROOP
-	- Circles around player
-	- Scatter shot
-OTHER
-	- Homing missiles
+ARCADE
+	LEVEL 1		4 TARGETS
+	LEVEL 2		2 ASTEROIDS
+	LEVEL 3		1 FIGHTER 1 ASTEROID
+	LEVEL 4		2 ASTEROIDS 1 GEYSER
+	LEVEL 5		1 FIGHTER 1 ASTEROID 1 BOMBARDIER
+	LEVEL 6		2 FIGHTERS 1 GEYSER 1 ASTEROID
+	LEVEL 7		1 GEYSER 1 ASTEROID 1 FIGHTER 1 BOMBARDIER
+	LEVEL 8		3 ASTEROIDS 1 GEYSER 1 BOMBARDIER
+	LEVEL 9		2 GEYSERS 2 FIGHTERS 1 BOMBARDIER
+	LEVEL 10	2 GEYSER 1 ASTEROID 2 FIGHTERS 1 BOMBARDIER
 
-CHUNKS
-	- Destructible wall (| or -)
-	- Explosive
-	- Trap
+SINGLE FLOOR
+	10 ROOMS
+	1-2 TRAPS
+	1-2 SECRETS
+
+ENEMIES
+	TARGET		Deals no damage, stays in one place. Used for training
+	FIGHTER		Can use rush attack or fire bullets
+	ASTEROID	Splits into smaller copies upon damage
+	BOMBARDIER	Randomly places mines around the map
+	GEYSER		Shoots a spiral of bullets around the map
+	SCATTER		Shoots a scatter shot
+	LAUNCHER	Shoots a homing missile
+
+FEATURES
+	S ROOM		A hidden room that can be revealed with bullets
+	TRAP		Invisible trap that can be disarmed with bullets
+	CHEST		Contains a code which buffs a random stat
+	P CHEST		Comes in sets and contains part of a code
 
 				MULTIPLAYER?	SPLIT CHESTS?		SHELL CHESTS?	PARTIAL CHESTS?
 SINGLE ROOM		LOCAL ONLY		NO					NO				NO

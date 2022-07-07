@@ -283,6 +283,8 @@ MonoBehaviour:
   bottomRight: {x: 12, y: -12}
   landmine: {fileID: 3760927138881186375, guid: e009b37cc3c758c46bc75863e1654831,
     type: 3}
+  spawnOrb: {fileID: 5322716715758118215, guid: a9f5b86c612d34c4d9598b4d20c875d9,
+    type: 3}
   chargeSpeed: 2
   chargeDuration: 6
   rotateDuration: 0.25

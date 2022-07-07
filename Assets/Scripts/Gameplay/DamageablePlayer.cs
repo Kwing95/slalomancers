@@ -54,6 +54,23 @@ public class DamageablePlayer : Damageable
         }
     }
 
+    public void OnDestroy()
+    {
+        if(GameManager.currentMode == GameManager.GameMode.Arcade)
+        {
+            List<GameObject> playerList = new List<GameObject>();
+            for (int i = 0; i < ObjectContainer.instance.players.transform.childCount; ++i)
+            {
+                GameObject player = ObjectContainer.instance.players.transform.GetChild(i).gameObject;
+                if (player.activeSelf)
+                    playerList.Add(ObjectContainer.instance.players.transform.GetChild(i).gameObject);
+            }
+
+            if (playerList.Count == 0)
+                ArcadeManager.GameOver();
+        }
+    }
+
     private void RefreshBars()
     {
         if (greenBar)

@@ -18,7 +18,22 @@ public class EnemyUpgrader : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        powerLevel = Room<RoomData>.current.data.difficulty;
+        // Maybe reset with higher difficulty in arcade mode
+        if(GameManager.currentMode == GameManager.GameMode.SingleFloor)
+        {
+            powerLevel = Room<RoomData>.current.data.difficulty;
+            ApplyUpgrades();
+        }
+    }
+
+    public void SetPowerLevel(int amount)
+    {
+        powerLevel = amount;
+        ApplyUpgrades();
+    }
+
+    private void ApplyUpgrades()
+    {
         damageable = GetComponent<DamageableEnemy>();
         shooter = GetComponent<Shooter>();
         contactDamager = GetComponent<ContactDamager>();
