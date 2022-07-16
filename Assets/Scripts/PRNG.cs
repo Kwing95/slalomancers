@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
@@ -10,11 +11,14 @@ public class PRNG : MonoBehaviour
 
     public Text text;
 
+    public static readonly TextAsset ADJECTIVES = Resources.Load<TextAsset>("adjectives");
+    public static readonly TextAsset ANIMALS = Resources.Load<TextAsset>("animals");
+
     public static List<string> adjectives;
     public static List<string> animals;
 
-    // minute, hour, day, week, month, year
-    public static int[] secondConversions = new int[6] { 60, 3600, 86400, 604800, 2592000, 31104000 };
+    // minute, hour, day, week, month, year, placeholder
+    public static int[] secondConversions = new int[7] { 60, 3600, 86400, 604800, 2592000, 31104000, 1 };
 
     private static int nonce = 1;
     private static int rawSeed = 0;
@@ -68,13 +72,14 @@ public class PRNG : MonoBehaviour
         System.DateTime epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
         int unixTime = (int)(System.DateTime.UtcNow - epochStart).TotalSeconds;
 
+        ResetNonce();
         rawSeed = unixTime / secondConversions[0];
         moddedSeed = rawSeed * (unixTime / divisor);
         SetLobby();
     }
 
     // Returns a random string representing the current seed
-    public static void SetLobby()
+    private static void SetLobby()
     {
         if (adjectives == null)
             InitializeLists();
@@ -91,22 +96,8 @@ public class PRNG : MonoBehaviour
 
     private static void InitializeLists()
     {
-        adjectives = FileToList(@"Assets/Resources/adjectives.txt");
-        animals = FileToList(@"Assets/Resources/animals.txt");
+        adjectives = ADJECTIVES.text.Split().ToList();
+        animals = ANIMALS.text.Split().ToList();
     }
 
-    private static List<string> FileToList(string path)
-    {
-        List<string> returnValue = new List<string>();
-        returnValue.Add("");
-        return returnValue;
-        /*
-        StreamReader inStream = new StreamReader(path);
-
-        while (!inStream.EndOfStream)
-            returnValue.Add(inStream.ReadLine());
-
-        inStream.Close();
-        return returnValue;*/
-    }
 }

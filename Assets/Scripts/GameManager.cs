@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
 
     public GameObject asteroid;
     public GameObject wyvern;
+    public List<GameObject> chests;
     public List<GameObject> enemies;
     public List<GameObject> playerButtons;
 
@@ -49,6 +50,15 @@ public class GameManager : MonoBehaviour
         quitButton.SetActive(isPaused);
         pauseButton.color = isPaused ? Color.white : Color.clear;
         Time.timeScale = isPaused ? 0 : 1;
+    }
+
+    public void ForceClear()
+    {
+        List<GameObject> enemies = ObjectContainer.GetAllEnemies();
+        foreach(GameObject enemy in enemies)
+        {
+            Destroy(enemy.gameObject);
+        }
     }
 
     // Update is called once per frame

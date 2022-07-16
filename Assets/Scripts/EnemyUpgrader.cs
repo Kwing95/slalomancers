@@ -113,7 +113,7 @@ public class EnemyUpgrader : MonoBehaviour
         powerLevel %= 3;
         damageable.maxHealth = 5 * powerLevel;
         damageable.Start();
-        Debug.Log(damageable.maxHealth);
+        // Debug.Log(damageable.maxHealth);
     }
 
     // Update is called once per frame

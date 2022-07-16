@@ -55,7 +55,7 @@ public class Shooter : MonoBehaviour
 
         Vector2 vel = bulletSpeed * unitDirection;
 
-        GameObject temp = Instantiate(bullet, (Vector2)transform.position + unitDirection * 2, Quaternion.identity);
+        GameObject temp = Instantiate(bullet, (Vector2)transform.position + unitDirection * 2, Quaternion.identity, ObjectContainer.instance.bullets.transform);
         temp.GetComponent<Bullet>().Initialize(vel, bulletDamage, bulletPenetration, bulletLifespan, type, color);
         //temp.GetComponent<SpriteRenderer>().color = bulletType == Bullet.Type.Friendly ? Color.green : Color.red;
     }

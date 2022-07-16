@@ -33,6 +33,16 @@ public class DoorManager : MonoBehaviour
 
     public void LoadRoom(Point offset)
     {
+        // Delete objects from previous room
+        List<GameObject> chests = ObjectContainer.GetAllChests();
+        foreach(GameObject chest in chests)
+            Destroy(chest);
+
+        List<GameObject> bullets = ObjectContainer.GetAllBullets();
+        foreach (GameObject bullet in bullets)
+            Destroy(bullet);
+
+
         // Update current location
         Point oldPoint = Room<RoomData>.current.location;
         //Debug.Log(Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
@@ -40,21 +50,35 @@ public class DoorManager : MonoBehaviour
         text.text = Room<RoomData>.current.name + "\n" + Room<RoomData>.current.data.difficulty;
         // Update doors
         UpdateDoors();
-        Debug.Log(Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
+        Debug.Log("Entering room " + Room<RoomData>.current.location.x + " " + Room<RoomData>.current.location.y);
         // Unfreeze players
         foreach (GameObject player in ObjectContainer.GetAllPlayers())
             player.GetComponentInChildren<HatMover>().SetPause(false);
+
         // Spawn enemies
-        if (!Room<RoomData>.current.GetCleared())
+        for(int i = 0; i < Room<RoomData>.current.data.chunks.Length; ++i)
         {
-            for(int i = 0; i < Room<RoomData>.current.data.chunks.Length; ++i)
+            Chunk chunk = Room<RoomData>.current.data.chunks[i];
+
+            if (chunk.type == Chunk.Enemies.Chest)
             {
-                Chunk chunk = Room<RoomData>.current.data.chunks[i];
-                if(chunk.type != Chunk.Enemies.None)
-                {
-                    Instantiate(GameManager.instance.enemies[(int)chunk.type], ChunkIndexToPosition(i), 
-                        Quaternion.identity, ObjectContainer.instance.enemies.transform);
-                }
+                // Spawn chests
+                GameObject newChest = Instantiate(GameManager.instance.chests[0], ChunkIndexToPosition(2),
+                    Quaternion.identity, ObjectContainer.instance.chests.transform); // No parent is set!
+                ChestPickup chestPickup = newChest.GetComponent<ChestPickup>();
+
+                chestPickup.code = Room<RoomData>.current.data.chunks[2].chest.code;
+                chestPickup.chestGroup = Room<RoomData>.current.data.chunks[2].chest.group;
+
+            } else if (chunk.type != Chunk.Enemies.None && !Room<RoomData>.current.GetCleared())
+            {
+                // Spawn enemies
+                GameObject newEnemy = Instantiate(GameManager.instance.enemies[(int)chunk.type], ChunkIndexToPosition(i),
+                    Quaternion.identity);
+
+                // Using "chests" as parent should work
+                newEnemy.transform.parent = chunk.type == Chunk.Enemies.Trap ?
+                    ObjectContainer.instance.chests.transform : ObjectContainer.instance.enemies.transform;
             }
         }
     }
@@ -97,7 +121,7 @@ public class DoorManager : MonoBehaviour
             output += "\n";
         }
         if(Floor<RoomData>.PointInBounds(point) && floor.floor.floor[point.y, point.x].data.isSecret)
-            door.SetStatus(Door.Status.Blocked);
+            door.SetStatus(Door.Status.Hidden);
         else if (Floor<RoomData>.PointInBounds(point) && floor.floor.floor[point.y, point.x].GetValid())
             door.SetStatus(Room<RoomData>.current.GetCleared() ? Door.Status.Open : Door.Status.Locked);
         else

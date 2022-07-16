@@ -8,10 +8,11 @@ using UnityEngine.UI;
 public class SceneService : MonoBehaviour
 {
 
+    public static SceneService instance;
     // Start is called before the first frame update
     void Start()
     {
-        
+        instance = this;
     }
 
     // Update is called once per frame

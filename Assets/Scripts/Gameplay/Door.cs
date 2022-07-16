@@ -13,7 +13,7 @@ public class Door : MonoBehaviour
     public Direction direction;
     public int secretHealth = -1;
     private Point offset;
-    public enum Status { Open, Locked, Blocked };
+    public enum Status { Open, Locked, Blocked, Hidden };
     private Status status = Status.Blocked;
 
     void Awake()
@@ -48,7 +48,12 @@ public class Door : MonoBehaviour
         {
             secretHealth -= 1;
             if (secretHealth == 0)
+            {
                 SetStatus(Status.Open);
+                Point secretLocation = new Point(Room<RoomData>.current.location.x + offset.x,
+                    Room<RoomData>.current.location.y + offset.y);
+                Room<RoomData>.GetRoomFromPoint(secretLocation).data.isSecret = false;
+            }
         }
             
 
@@ -80,6 +85,10 @@ public class Door : MonoBehaviour
                 break;
             case Status.Blocked:
                 newColor = Color.clear;
+                break;
+            case Status.Hidden:
+                newColor = Color.clear;
+                secretHealth = 3;
                 break;
         }
         

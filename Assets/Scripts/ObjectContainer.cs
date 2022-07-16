@@ -9,6 +9,8 @@ public class ObjectContainer : MonoBehaviour
 
     public GameObject players;
     public GameObject enemies;
+    public GameObject chests;
+    public GameObject bullets;
 
     // Start is called before the first frame update
     void Awake()
@@ -38,5 +40,24 @@ public class ObjectContainer : MonoBehaviour
             enemyList.Add(instance.enemies.transform.GetChild(i).gameObject);
 
         return enemyList;
+    }
+
+    public static List<GameObject> GetAllChests()
+    {
+        List<GameObject> chestList = new List<GameObject>();
+        for (int i = 0; i < instance.chests.transform.childCount; ++i)
+            chestList.Add(instance.chests.transform.GetChild(i).gameObject);
+
+        return chestList;
+    }
+
+    public static List<GameObject> GetAllBullets()
+    {
+        List<GameObject> bulletList = new List<GameObject>();
+        for (int i = 0; i < instance.bullets.transform.childCount; ++i)
+            bulletList.Add(instance.bullets.transform.GetChild(i).gameObject);
+
+        return bulletList;
+
     }
 }

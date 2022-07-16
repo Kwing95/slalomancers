@@ -41,6 +41,7 @@ public class Numpad : MonoBehaviour
 
     public void EnterCode()
     {
+        PassManager.TryPassword(inputText);
         // Cross-check code with valid codes
         inputText = "";
         UpdateText();

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,6 +29,37 @@ public class PlayerStats : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public static Stat RandomStat()
+    {
+        Array values = Enum.GetValues(typeof(Stat));
+        return (Stat)values.GetValue(PRNG.Range(0, values.Length));
+    }
+
+    public void BuffStat(Stat statType)
+    {
+        switch (statType)
+        {
+            case Stat.Damage:
+                DamageUp();
+                break;
+            case Stat.Health:
+                BuffHealth();
+                break;
+            case Stat.Penetration:
+                PenetrationUp();
+                break;
+            case Stat.Recovery:
+                BuffRecovery();
+                break;
+            case Stat.Reload:
+                ReloadUp();
+                break;
+            case Stat.Speed:
+                BuffSpeed();
+                break;
+        }
     }
 
     public void BuffHealth()
